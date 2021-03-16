@@ -1,5 +1,7 @@
 #include <iostream>
 #include <vector>
+#include <sstream>
+#include <string>
 
 
 const long long int len = 10000000;
@@ -29,21 +31,23 @@ long long int C(long long int n, long long int k)
 
 int main()
 {
-    std::vector<long long int> First;
-    std::string inp;
-    std::getline(std::cin, inp);
-    std::cout << inp;
-    long long int tmp = 0;
-    for(char c : inp){
-        tmp = 10 * tmp + static_cast<int>(c);
-        if (c == ' ')
-            First.push_back(tmp);
-    }
-    std::vector<long long int> Ans(First.size(), 0);
+    std::vector<float> First;
+    std::string str;
+    std::getline(std::cin, str);
+    std::stringstream inp;
+    inp << str;
+    
+    for(float tmp = 0; inp >> tmp;)
+        First.push_back(tmp);
+    
+    std::vector<float> Ans(First.size(), 0);
+    
     for (long long int i = 1; i < First.size(); ++i)
-        for( long long int j = 1; j <= i; ++i)
+        for( long long int j = 0; j < i; ++j)
             Ans[j] += C(i, j) * First[i];
+    Ans.pop_back();
     for(auto elem : Ans)
         std::cout << elem << ' ';
+    
     return 0;
 }
